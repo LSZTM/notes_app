@@ -16,7 +16,7 @@ GRADES = ["9", "10", "11", "12"]
 SUBJECTS = ["English", "Tamil", "Mathematics", "Physics", "Chemistry", "Computer Science"]
 
 # For local storage
-LOCAL_MODE = True  # Set to False when deploying to Community Cloud
+LOCAL_MODE = False  # Set to False when deploying to Community Cloud
 if LOCAL_MODE:
     DESKTOP_PATH = os.path.join(os.path.expanduser("~"), "Desktop")
     UPLOAD_FOLDER = os.path.join(DESKTOP_PATH, "NotesApp_Uploads")
