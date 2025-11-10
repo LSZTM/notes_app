@@ -91,7 +91,7 @@ def get_metadata(grade, subject, filename):
 
 
 # =====================================================================
-#                         CUSTOM CSS
+#                         CUSTOM CSS (ORIGINAL + Hero Fix)
 # =====================================================================
 def local_css():
     st.markdown("""
@@ -125,22 +125,11 @@ def local_css():
         transition: 0.3s ease;
     }
 
-    /* HERO cards */
-    .hero-card {
-        background-color:var(--card);
-        border:1px solid var(--border);
-        border-radius:20px;
-        width:380px;
-        padding:25px;
-        text-align:center;
-        transition:0.3s;
-        box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-    }
-
+    /* Hero Card Hover */
     .hero-card:hover {
-        transform:translateY(-8px) scale(1.03);
-        border:1px solid #4c8bf5;
-        box-shadow:0 12px 45px rgba(76, 139, 245, 0.45);
+        transform: translateY(-8px) scale(1.03);
+        border: 1px solid #4c8bf5 !important;
+        box-shadow: 0 12px 45px rgba(76, 139, 245, 0.45);
     }
 
     .app-title {
@@ -161,56 +150,49 @@ def navigate_to(page):
 
 
 # =====================================================================
-#                         HOME PAGE
+#                         HOME PAGE (Hero Fixed)
 # =====================================================================
 def home_page():
 
     # Header
     st.markdown("""
-        <div class="header" style="text-align:center;">
-            <h1 class="app-title">NotesHub</h1>
-            <p style="font-size: 1.2rem; opacity: 0.8;">
+        <div style='text-align:center;'>
+            <h1 class='app-title'>NotesHub</h1>
+            <p style='font-size:1.2rem; opacity:0.8;'>
                 A Community Connect initiative by SRM IST, Ramapuram – IT Department  
                 supporting St. Joseph’s Higher Secondary School, Cuddalore
             </p>
         </div>
     """, unsafe_allow_html=True)
 
-    # =============== HERO CARDS ===============
-    st.markdown("""
-    <div style="
-        display:flex; 
-        justify-content:center; 
-        flex-wrap:wrap; 
-        gap:30px; 
-        margin-top:40px; 
-        margin-bottom:40px;">
-        
-        <div class="hero-card">
-            <h2>SRM IST – Ramapuram</h2>
-            <p style="opacity:0.85;">
-                The Department of Information Technology at SRM IST, Ramapuram 
-                actively participates in social outreach initiatives. As part of the 
-                <b>Community Connect</b> program, IT students develop applications 
-                that support local schools, enhance digital literacy, and promote 
-                accessible learning.
-            </p>
+    # -------- HERO CARDS (FIXED) --------
+    st.markdown(
+        """
+        <div style='display:flex; justify-content:center; flex-wrap:wrap; gap:30px; margin-top:40px; margin-bottom:40px;'>
+
+            <div class='hero-card' style='background-color:var(--card); border:1px solid var(--border); border-radius:20px; width:380px; padding:25px; text-align:center; transition:0.3s; box-shadow:0 6px 25px rgba(0,0,0,0.35);'>
+                <h2 style='margin-bottom:10px; color:var(--text);'>SRM IST – Ramapuram</h2>
+                <p style='opacity:0.85; font-size:0.95rem; line-height:1.5;'>
+                    The Department of Information Technology at SRM IST, Ramapuram engages in 
+                    community outreach through the <b>Community Connect</b> initiative. Students 
+                    develop digital solutions that support schools and promote accessible learning.
+                </p>
+            </div>
+
+            <div class='hero-card' style='background-color:var(--card); border:1px solid var(--border); border-radius:20px; width:380px; padding:25px; text-align:center; transition:0.3s; box-shadow:0 6px 25px rgba(0,0,0,0.35);'>
+                <h2 style='margin-bottom:10px; color:var(--text);'>St. Joseph’s HSS – Cuddalore</h2>
+                <p style='opacity:0.85; font-size:0.95rem; line-height:1.5;'>
+                    St. Joseph’s Higher Secondary School, Cuddalore collaborates in this initiative 
+                    to enhance student access to structured study resources for Grades 9–12.
+                </p>
+            </div>
+
         </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-        <div class="hero-card">
-            <h2>St. Joseph’s HSS – Cuddalore</h2>
-            <p style="opacity:0.85;">
-                St. Joseph’s Higher Secondary School, Cuddalore is a partner institution 
-                in this initiative. The school benefits from digital platforms such as 
-                NotesHub to provide structured study materials for students of Grades 9–12, 
-                improving accessibility and supporting modern learning methods.
-            </p>
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
-
-    # =============== ORIGINAL ABOUT CARD (UNCHANGED) ===============
+    # -------- ORIGINAL ABOUT CARD --------
     st.markdown("""
         <div class="card">
             <h3>📚 About NotesHub</h3>
@@ -219,7 +201,7 @@ def home_page():
         </div>
     """, unsafe_allow_html=True)
 
-    # =============== ORIGINAL FEATURE SECTIONS ===============
+    # -------- ORIGINAL FEATURES --------
     st.header("✨ Your Awesome Features ✨")
 
     st.subheader("📤 Easy Upload")
@@ -240,16 +222,16 @@ def home_page():
     with col2:
         st.button("Browse Notes", on_click=navigate_to, args=("view",))
 
-    # =============== FOOTER ===============
+    # -------- FOOTER --------
     st.markdown("""
-    <div style="text-align:center; margin-top:50px; opacity:0.7;">
+    <div style='text-align:center; margin-top:50px; opacity:0.7;'>
         Developed by <b>SRM IT Students – Community Connect 2025</b>
     </div>
     """, unsafe_allow_html=True)
 
 
 # =====================================================================
-#                         UPLOAD PAGE (UNCHANGED)
+#                         UPLOAD PAGE (Unmodified)
 # =====================================================================
 def upload_page():
 
@@ -284,7 +266,7 @@ def upload_page():
 
 
 # =====================================================================
-#                         VIEW PAGE (UNCHANGED)
+#                         VIEW PAGE (Unmodified)
 # =====================================================================
 def view_notes_page():
 
