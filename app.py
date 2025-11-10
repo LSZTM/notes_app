@@ -6,13 +6,14 @@ import time
 import tempfile
 
 # =====================================================================
-#                         BASE64 LOGOS (INSERT YOUR OWN)
+#                         INSERT BASE64 LOGOS HERE
 # =====================================================================
-SRM_LOGO_BASE64 = "YOUR_FULL_SRM_LOGO_BASE64_STRING"
-STJ_LOGO_BASE64 = "YOUR_FULL_ST_JOSEPH_LOGO_BASE64_STRING"
+SRM_LOGO_BASE64 = "PUT_YOUR_SRM_BASE64_HERE"
+STJ_LOGO_BASE64 = "PUT_YOUR_ST_JOSEPH_BASE64_HERE"
+
 
 # =====================================================================
-#                         SESSION / CONSTANTS
+#                         SESSION & CONSTANTS
 # =====================================================================
 if 'page' not in st.session_state:
     st.session_state.page = 'home'
@@ -42,17 +43,18 @@ def init_directory_structure():
             base = Path(UPLOAD_FOLDER)
             base.mkdir(exist_ok=True)
 
-            for g in GRADES:
-                (base / g).mkdir(exist_ok=True)
-                for s in SUBJECTS:
-                    (base / g / s).mkdir(exist_ok=True)
+            for grade in GRADES:
+                gp = base / grade
+                gp.mkdir(exist_ok=True)
+                for subject in SUBJECTS:
+                    (gp / subject).mkdir(exist_ok=True)
 
             if METADATA_FILE and not os.path.exists(METADATA_FILE):
                 with open(METADATA_FILE, "w") as f:
                     json.dump({}, f)
 
         except Exception as e:
-            st.error(f"Folder creation failed: {e}")
+            st.error(f"Could not create folders: {e}")
 
 
 init_directory_structure()
@@ -62,7 +64,6 @@ init_directory_structure()
 #                         METADATA
 # =====================================================================
 def save_metadata(grade, subject, filename, description):
-
     if LOCAL_MODE and METADATA_FILE:
         try:
             metadata = json.load(open(METADATA_FILE))
@@ -85,7 +86,6 @@ def save_metadata(grade, subject, filename, description):
 
 
 def get_metadata(grade, subject, filename):
-
     if LOCAL_MODE and METADATA_FILE:
         try:
             metadata = json.load(open(METADATA_FILE))
@@ -94,13 +94,11 @@ def get_metadata(grade, subject, filename):
     else:
         metadata = st.session_state.notes_metadata
 
-    key = f"{grade}/{subject}/{filename}"
-
-    return metadata.get(key, {"description": ""})
+    return metadata.get(f"{grade}/{subject}/{filename}", {"description": ""})
 
 
 # =====================================================================
-#                         CUSTOM CSS
+#                         CUSTOM CSS (YOUR ORIGINAL)
 # =====================================================================
 def local_css():
     st.markdown("""
@@ -109,49 +107,43 @@ def local_css():
         --primary: #6C63FF;
         --secondary: #FF6584;
         --bg: #121212;
-        --text: #E0E0E0;
         --card: #1E1E1E;
+        --text: #E0E0E0;
         --border: #2E2E2E;
     }
 
     .stApp {
-        background: var(--bg);
+        background-color: var(--bg);
         color: var(--text);
     }
 
-    .hero-container {
-        display:flex;
-        justify-content:center;
-        flex-wrap:wrap;
-        gap:35px;
-        margin-top:40px;
-        margin-bottom:40px;
-    }
-
-    .hero-card {
+    .card {
+        border-radius: 16px;
+        padding: 24px;
+        margin: 16px 0;
         background-color: var(--card);
         border: 1px solid var(--border);
-        width: 380px;
-        border-radius: 22px;
-        padding: 25px;
-        text-align: center;
-        box-shadow: 0 6px 25px rgba(0,0,0,0.35);
-        transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        transition: 0.3s ease;
+    }
+
+    /* Added Only for Hero Cards */
     .hero-card:hover {
         transform: translateY(-8px) scale(1.03);
-        box-shadow: 0 10px 35px rgba(0,0,0,0.55);
         border: 1px solid #4c8bf5;
+        box-shadow: 0 12px 45px rgba(76, 139, 245, 0.45);
     }
 
     .app-title {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip:text;
         color:transparent;
-        font-size:3rem;
         font-weight:800;
-        margin-bottom:10px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -160,75 +152,115 @@ def local_css():
 # =====================================================================
 #                         NAVIGATION
 # =====================================================================
-def navigate_to(p):
-    st.session_state.page = p
+def navigate_to(page):
+    st.session_state.page = page
 
 
 # =====================================================================
-#                         HOME PAGE WITH HERO CARDS
+#                         HOME PAGE (ONLY HERO ADDED)
 # =====================================================================
 def home_page():
 
+    # Header
     st.markdown("""
-        <div style="text-align:center; margin-top:20px;">
+        <div class="header" style="text-align:center;">
             <h1 class="app-title">NotesHub</h1>
-            <p style="font-size:1.2rem; opacity:0.85;">
+            <p style="font-size: 1.2rem; opacity: 0.8;">
                 A Community Connect initiative by SRM IST, Ramapuram – IT Department  
                 supporting St. Joseph’s Higher Secondary School, Cuddalore
             </p>
         </div>
     """, unsafe_allow_html=True)
 
-    # ============= HERO CARDS =============
+    # =====================================================================
+    #                         HERO CARDS INSERTED HERE
+    # =====================================================================
     st.markdown(f"""
-    <div class="hero-container">
+    <div style="
+        display:flex; 
+        justify-content:center; 
+        flex-wrap:wrap; 
+        gap:30px; 
+        margin-top:40px; 
+        margin-bottom:40px;"
+    >
 
-        <!-- SRM Card -->
-        <div class="hero-card">
+        <div class="hero-card" style="
+            background-color:var(--card);
+            border:1px solid var(--border);
+            border-radius:20px;
+            width:380px; padding:25px; text-align:center;
+            transition:0.3s;">
+            
             <img src="data:image/png;base64,{SRM_LOGO_BASE64}" 
-                 style="width:150px; border-radius:12px; margin-bottom:15px;">
-            <h2 style="color:var(--text); font-size:1.3rem; font-weight:600;">
-                SRM IST – Ramapuram (IT Department)
-            </h2>
-            <p style="opacity:0.85; font-size:0.95rem; line-height:1.5;">
-                Developed by second-year IT students under the <b>Community Connect</b> initiative
-                to support digital learning infrastructure for schools.
-            </p>
+                style="width:140px; margin-bottom:12px;">
+            <h3>SRM IST – Ramapuram</h3>
+            <p style="opacity:0.85;">Developed by second-year IT students under the Community Connect initiative.</p>
         </div>
 
-        <!-- St Joseph's Card -->
-        <div class="hero-card">
+        <div class="hero-card" style="
+            background-color:var(--card);
+            border:1px solid var(--border);
+            border-radius:20px;
+            width:380px; padding:25px; text-align:center;
+            transition:0.3s;">
+            
             <img src="data:image/png;base64,{STJ_LOGO_BASE64}" 
-                 style="width:150px; border-radius:12px; margin-bottom:15px;">
-            <h2 style="color:var(--text); font-size:1.3rem; font-weight:600;">
-                St. Joseph’s HSS – Cuddalore
-            </h2>
-            <p style="opacity:0.85; font-size:0.95rem; line-height:1.5;">
-                Partner institution using NotesHub for centralized study resources 
-                for Grade 9–12 students.
-            </p>
+                style="width:140px; margin-bottom:12px;">
+            <h3>St. Joseph’s HSS – Cuddalore</h3>
+            <p style="opacity:0.85;">Partner institution benefiting from centralized digital study materials.</p>
         </div>
 
     </div>
     """, unsafe_allow_html=True)
 
-    # ============= FOOTER =============
+    # =====================================================================
+    #                         YOUR ORIGINAL ABOUT CARD (UNMODIFIED)
+    # =====================================================================
     st.markdown("""
-    <div style="width:100%; text-align:center; margin-top:50px; opacity:0.7;
-                font-size:0.9rem; padding:20px 0;">
-        Developed by <b>SRM IT Students – Community Connect 2025</b>
-    </div>
+        <div class="card">
+            <h3>📚 About NotesHub</h3>
+            <p>NotesHub is a simple yet powerful application designed to help students and educators share
+            study materials effortlessly. Upload your notes in PDF format and access them anytime, anywhere.</p>
+        </div>
     """, unsafe_allow_html=True)
 
+    # =====================================================================
+    #                         YOUR ORIGINAL SECTIONS (COMPLETELY SAME)
+    # =====================================================================
+    st.header("✨ Your Awesome Features ✨")
+
+    st.subheader("📤 Easy Upload")
+    st.write("Upload your study materials in PDF format with just a few clicks.")
+    st.write("---")
+
+    st.subheader("📂 Organized Library")
+    st.write("All your notes are stored neatly and categorized by grade and subject.")
+    st.write("---")
+
+    st.subheader("🌓 Dark/Light Mode")
+    st.write("Choose the theme you prefer for reading comfort.")
+    st.write("---")
+
+    # Buttons (same)
     col1, col2 = st.columns(2)
     with col1:
         st.button("Get Started →", on_click=navigate_to, args=("upload",))
     with col2:
         st.button("Browse Notes", on_click=navigate_to, args=("view",))
 
+    # =====================================================================
+    #                         FOOTER
+    # =====================================================================
+    st.markdown("""
+    <div style="text-align:center; margin-top:50px; opacity:0.7;">
+        Developed by <b>SRM IT Students – Community Connect 2025</b>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 # =====================================================================
-#                         UPLOAD PAGE
+#                         UPLOAD PAGE (UNCHANGED)
 # =====================================================================
 def upload_page():
 
@@ -237,33 +269,33 @@ def upload_page():
     with st.form("upload_form"):
         grade = st.selectbox("Select Grade", GRADES)
         subject = st.selectbox("Select Subject", SUBJECTS)
-        file = st.file_uploader("Choose PDF", type="pdf")
-        desc = st.text_area("Description", placeholder="Write something about this note...")
+        uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+        description = st.text_area("Note Description")
 
-        submit = st.form_submit_button("Upload")
+        submitted = st.form_submit_button("Upload Note")
 
-        if submit and file is not None:
+        if submitted and uploaded_file is not None:
 
             if LOCAL_MODE:
-                target = Path(UPLOAD_FOLDER) / grade / subject
-                target.mkdir(parents=True, exist_ok=True)
-                with open(target / file.name, "wb") as f:
-                    f.write(file.getbuffer())
+                folder = Path(UPLOAD_FOLDER) / grade / subject
+                folder.mkdir(parents=True, exist_ok=True)
+                with open(folder / uploaded_file.name, "wb") as f:
+                    f.write(uploaded_file.getbuffer())
             else:
-                key = f"{grade}/{subject}/{file.name}"
-                st.session_state[f"file_{key}"] = file.getvalue()
+                key = f"{grade}/{subject}/{uploaded_file.name}"
+                st.session_state[f"file_{key}"] = uploaded_file.getvalue()
 
-            save_metadata(grade, subject, file.name, desc)
+            save_metadata(grade, subject, uploaded_file.name, description)
 
-            st.success("Uploaded successfully!")
+            st.success(f"Uploaded to Grade {grade} – {subject}")
             time.sleep(2)
             navigate_to("home")
 
-    st.button("← Back to Home", on_click=navigate_to, args=("home",))
+    st.button("Back", on_click=navigate_to, args=("home",))
 
 
 # =====================================================================
-#                         VIEW NOTES PAGE
+#                         VIEW PAGE (UNCHANGED)
 # =====================================================================
 def view_notes_page():
 
@@ -284,40 +316,40 @@ def view_notes_page():
                 files.append(Path(key.split("/")[-1]))
 
     if not files:
-        st.warning("No notes found!")
+        st.warning("No notes found")
         return
 
     st.success(f"Found {len(files)} notes")
 
-    for file in files:
-        name = file.name
+    for f in files:
+        name = f.name
         info = get_metadata(grade, subject, name)
 
         with st.expander(f"📄 {name}"):
             st.write(f"**Description:** {info['description']}")
 
             if LOCAL_MODE:
-                with open(Path(UPLOAD_FOLDER) / grade / subject / name, "rb") as f:
-                    st.download_button("Download", f, file_name=name)
+                with open(Path(UPLOAD_FOLDER) / grade / subject / name, "rb") as pdf:
+                    st.download_button("Download", pdf, name)
             else:
-                key = f"{grade}/{subject}/{name}"
-                blob = st.session_state.get(f"file_{key}")
-                st.download_button("Download", blob, file_name=name)
+                file_key = f"{grade}/{subject}/{name}"
+                blob = st.session_state.get(f"file_{file_key}")
+                st.download_button("Download", data=blob, file_name=name)
 
-    st.button("← Back to Home", on_click=navigate_to, args=("home",))
+    st.button("Back", on_click=navigate_to, args=("home",))
 
 
 # =====================================================================
-#                         MAIN ROUTER
+#                         MAIN
 # =====================================================================
 def main():
     local_css()
 
-    if st.session_state.page == "home":
+    if st.session_state.page == 'home':
         home_page()
-    elif st.session_state.page == "upload":
+    elif st.session_state.page == 'upload':
         upload_page()
-    elif st.session_state.page == "view":
+    elif st.session_state.page == 'view':
         view_notes_page()
 
 
