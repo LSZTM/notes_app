@@ -91,7 +91,7 @@ def get_metadata(grade, subject, filename):
 
 
 # =====================================================================
-#                         CUSTOM CSS (ORIGINAL + Hero Fix)
+#                         CUSTOM CSS (Original)
 # =====================================================================
 def local_css():
     st.markdown("""
@@ -125,13 +125,6 @@ def local_css():
         transition: 0.3s ease;
     }
 
-    /* Hero Card Hover */
-    .hero-card:hover {
-        transform: translateY(-8px) scale(1.03);
-        border: 1px solid #4c8bf5 !important;
-        box-shadow: 0 12px 45px rgba(76, 139, 245, 0.45);
-    }
-
     .app-title {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         -webkit-background-clip:text;
@@ -150,11 +143,11 @@ def navigate_to(page):
 
 
 # =====================================================================
-#                         HOME PAGE (Hero Fixed)
+#                         HOME PAGE (Hero Cards Removed)
 # =====================================================================
 def home_page():
 
-    # Header
+    # Header + Collaboration Note
     st.markdown("""
         <div style='text-align:center;'>
             <h1 class='app-title'>NotesHub</h1>
@@ -165,43 +158,18 @@ def home_page():
         </div>
     """, unsafe_allow_html=True)
 
-    # -------- HERO CARDS (FIXED) --------
-    st.markdown(
-        """
-        <div style='display:flex; justify-content:center; flex-wrap:wrap; gap:30px; margin-top:40px; margin-bottom:40px;'>
-
-            <div class='hero-card' style='background-color:var(--card); border:1px solid var(--border); border-radius:20px; width:380px; padding:25px; text-align:center; transition:0.3s; box-shadow:0 6px 25px rgba(0,0,0,0.35);'>
-                <h2 style='margin-bottom:10px; color:var(--text);'>SRM IST – Ramapuram</h2>
-                <p style='opacity:0.85; font-size:0.95rem; line-height:1.5;'>
-                    The Department of Information Technology at SRM IST, Ramapuram engages in 
-                    community outreach through the <b>Community Connect</b> initiative. Students 
-                    develop digital solutions that support schools and promote accessible learning.
-                </p>
-            </div>
-
-            <div class='hero-card' style='background-color:var(--card); border:1px solid var(--border); border-radius:20px; width:380px; padding:25px; text-align:center; transition:0.3s; box-shadow:0 6px 25px rgba(0,0,0,0.35);'>
-                <h2 style='margin-bottom:10px; color:var(--text);'>St. Joseph’s HSS – Cuddalore</h2>
-                <p style='opacity:0.85; font-size:0.95rem; line-height:1.5;'>
-                    St. Joseph’s Higher Secondary School, Cuddalore collaborates in this initiative 
-                    to enhance student access to structured study resources for Grades 9–12.
-                </p>
-            </div>
-
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # -------- ORIGINAL ABOUT CARD --------
+    # ---------------- Original About NotesHub ----------------
     st.markdown("""
         <div class="card">
             <h3>📚 About NotesHub</h3>
-            <p>NotesHub is a simple yet powerful application designed to help students and educators share
-            study materials effortlessly. Upload your notes in PDF format and access them anytime, anywhere.</p>
+            <p>
+            NotesHub is a simple yet powerful application designed to help students and educators share
+            study materials effortlessly. Upload your notes in PDF format and access them anytime, anywhere.
+            </p>
         </div>
     """, unsafe_allow_html=True)
 
-    # -------- ORIGINAL FEATURES --------
+    # ---------------- Original Features Section ----------------
     st.header("✨ Your Awesome Features ✨")
 
     st.subheader("📤 Easy Upload")
@@ -222,7 +190,7 @@ def home_page():
     with col2:
         st.button("Browse Notes", on_click=navigate_to, args=("view",))
 
-    # -------- FOOTER --------
+    # ---------------- Footer ----------------
     st.markdown("""
     <div style='text-align:center; margin-top:50px; opacity:0.7;'>
         Developed by <b>SRM IT Students – Community Connect 2025</b>
